@@ -126,7 +126,23 @@ The system was validated using **large-scale industry datasets** to simulate rea
    - Upload job descriptions
    - Search candidate database
    - Rank candidates automatically.
+8. Project Structure
 
+```text
+MAJOR PROJECT -2 (JOB - TALK)/
+├── backend/
+│   ├── data/                 # Raw dataset storage
+│   ├── job description/      # Processed LinkedIn job data
+│   ├── chatbot.py            # Gemini 1.5 Flash RAG logic
+│   ├── main.py               # FastAPI application entry point
+│   ├── matching.py           # TF-IDF & Cosine Similarity logic
+│   ├── parser.py             # PDF/Docx text extraction
+│   ├── data_prep.py          # Dataset cleaning and preprocessing
+│   └── all_resumes.csv       # Processed resume database
+├── frontend/
+│   ├── index.html            # Candidate Portal UI
+│   └── recruitment.html      # Recruiter Dashboard UI
+└── screenshots/              # UI Proof & Evidence
 ---
 
 # Execution Guide
@@ -145,5 +161,3 @@ python -m venv .venv
 # Windows
 .venv\Scripts\activate
 
-# Linux / Mac
-source .venv/bin/activate
