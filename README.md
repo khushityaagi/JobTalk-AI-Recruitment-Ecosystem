@@ -83,7 +83,6 @@ A chatbot powered by **Google Gemini 1.5 Flash** retrieves contextual informatio
 
 ### Database
 - MySQL  
-(Persistent storage for resumes, job descriptions, and chat context)
 
 ### Frontend
 - HTML5  
