@@ -57,32 +57,26 @@ Output of the recruitment engine ranking candidates by **mathematical alignment 
 
 The system uses a **Retrieval-Augmented Generation (RAG)** workflow combined with **Vector Search** to deliver accurate candidate-job matching.
 
-### Vectorization
-Raw text from resumes and job descriptions is converted into **numerical vectors using TF-IDF**.
+### Vectorization - Raw text from resumes and job descriptions is converted into **numerical vectors using TF-IDF**.
 
-### Matching
-**Cosine Similarity** calculates the similarity score between candidate and job vectors.
+### Matching - **Cosine Similarity** calculates the similarity score between candidate and job vectors.
 
-### Generative AI Layer
-A chatbot powered by **Google Gemini 1.5 Flash** retrieves contextual information from the **MySQL database** to provide personalized career insights.
+### Generative AI Layer - A chatbot powered by **Google Gemini 1.5 Flash** retrieves contextual information from the **MySQL database** to provide personalized career insights.
 
 ---
 
 # Tech Stack
 
-### Backend
-- FastAPI (Python)
+### Backend - FastAPI (Python)
 
-### AI Engine
-- Google Gemini 1.5 Flash
+### AI Engine - Google Gemini 1.5 Flash
 
 ### Machine Learning
-- Scikit-Learn
+  - Scikit-Learn
   - TF-IDF Vectorizer
   - Cosine Similarity
 
-### Database
-- MySQL  
+### Database - MySQL  
 
 ### Frontend
 - HTML5  
