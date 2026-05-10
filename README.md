@@ -1,4 +1,4 @@
-# JOB-TALK AI: Intelligent Recruitment Ecosystem
+# JOB-TALK : AI Recruitment System
 
 **Developed by:** [Khushi Tyagi](https://github.com/khushityaagi)  
 *B.Tech ( Data Science )*
