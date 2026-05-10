@@ -37,29 +37,35 @@ JOB-TALK AI is an intelligent recruitment support system that automates resume s
 
 ## System Architecture
 
-![Architecture](images/architecture.png)
+<p align="center">
+  <img src="images/architecture.png" width="500"/>
+</p>
 
 ---
 
 ## Applicant Interface
 
-![Applicant Interface](images/applicant_interface.png)
+<p align="center">
+  <img src="images/applicant_interface.png" width="550"/>
+</p>
 
 ---
 
 ## Hiring Dashboard
 
-![Hiring Dashboard](images/hiring_dashboard.png)
+<p align="center">
+  <img src="images/hiring_dashboard.png" width="550"/>
+</p>
 
 ---
 
 ## Performance Metrics
 
-
-![Performance Metrics](images/performance_metrics.png)
+<p align="center">
+  <img src="images/performance_metrics.png" width="400"/>
+</p>
 
 ---
-
 
 ## Future Enhancements
 
