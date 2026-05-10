@@ -4,7 +4,6 @@
 JOB-TALK AI is an intelligent recruitment support system that automates resume screening, semantic job matching, candidate ranking, and job recommendations using NLP and Sentence-BERT embeddings.
 
 ---
-
 ## Features
 
 - Resume Upload & Parsing  
