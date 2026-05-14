@@ -63,7 +63,7 @@ JOB-TALK AI is a recruitment support platform designed to optimize resume screen
 
 ## Performance Metrics
 <p align="center">
-  <img src="images/performance_metrics.png" width="400"/>
+  <img src="images/performance_metrics.png" width="200"/>
 </p>
 
 ---
