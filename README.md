@@ -27,8 +27,7 @@ JOB-TALK AI is an intelligent recruitment support system that automates resume s
 
 ---
 
-## Dataset
-
+## Dataset (From kaggle)
 - **2,400+ resumes** across multiple industries  
 - **123,000+ LinkedIn job postings** with descriptions and skills  
 
