@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB-TALK | Recruiter Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg-dark: #0f172a; 
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --match-cyan: #22d3ee;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background: var(--bg-dark); 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px; 
+            color: var(--text-light);
+        }
+        
+        .dashboard-container { 
+            width: 100%; 
+            max-width: 1100px; 
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px; 
+        }
+        
+        /* Left Panel */
+        .search-card { 
+            background: var(--card-bg); 
+            padding: 40px; 
+            border-radius: 20px; 
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            position: sticky;
+            top: 40px;
+        }
+        
+        h1 { font-size: 24px; margin-bottom: 24px; color: var(--text-light); font-weight: 700; }
+        
+        textarea { 
+            width: 100%; padding: 20px; border: 1px solid var(--card-border); border-radius: 12px; 
+            outline: none; 
+            height: 300px; 
+            resize: none; 
+            margin-bottom: 24px; 
+            font-size: 15px; 
+            background: rgba(15, 23, 42, 0.95) !important; 
+            color: var(--text-light) !important;
+            transition: 0.2s;
+        }
+
+        textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px var(--accent-glow); }
+        
+        .btn { 
+            width: 100%; 
+            background: var(--primary-color); 
+            color: white; 
+            border: none; 
+            padding: 18px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        
+        .status { margin-top: 20px; text-align: center; color: var(--primary-color); font-size: 14px; font-weight: 600; min-height: 20px; }
+
+        .results-section { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 16px; 
+            max-height: 85vh;
+            overflow-y: auto;
+            padding-right: 8px; 
+        }
+
+        .candidate-card { 
+            background: var(--card-bg); 
+            padding: 20px 24px; 
+            border-radius: 16px; 
+            border: 1px solid var(--card-border);
+            border-left: 6px solid var(--primary-color); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            transition: 0.2s;
+        }
+        .candidate-card:hover { transform: translateX(5px); background: rgba(51, 65, 85, 0.8); }
+
+        .candidate-info h3 { font-size: 16px; color: var(--text-light); margin-bottom: 4px; }
+        .candidate-info p { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+
+        .skill-pill-small {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--match-cyan);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 4px;
+            display: inline-block;
+            margin-top: 8px;
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        .match-score-badge { 
+            background: rgba(34, 211, 238, 0.1); 
+            padding: 10px; 
+            border-radius: 12px; 
+            text-align: center;
+            min-width: 80px;
+        }
+        .match-score-badge .score { color: var(--match-cyan); font-weight: 800; font-size: 18px; display: block; }
+        .match-score-badge .label { color: var(--text-muted); font-size: 10px; display: block; }
+
+        .placeholder-text {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 100px 40px;
+            border-radius: 20px;
+            border: 2px dashed var(--card-border);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="search-card">
+            <h1 , text-align: center>Recruiter Dashboard </h1>
+            <textarea id="recruiterJobInput" placeholder="Paste the Job Description here (e.g. Requirements, Skills, etc.)"></textarea>
+            <button class="btn" onclick="scanResumes()">Scan 2,000+ Resumes</button>
+            <p class="status" id="uploadStatus"></p>
+        </div>
+
+        <div class="results-section" id="recruiterResults">
+            <div class="placeholder-text">
+                <p>AI matches will appear here once you scan a job description.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = "http://127.0.0.1:8000";
+
+        const skillWhitelist = [
+            'python', 'java', 'sql', 'javascript', 'react', 'aws', 
+            'machine learning', 'docker', 'pandas', 'tensorflow', 
+            'scikit-learn', 'deep learning', 'fastapi', 'html', 'css', 'management'
+        ];
+
+        async function scanResumes() {
+            const jobDescInput = document.getElementById('recruiterJobInput');
+            const resultsContainer = document.getElementById('recruiterResults');
+            const status = document.getElementById('uploadStatus');
+
+            if (!jobDescInput.value.trim()) {
+                return alert("Please paste a Job Description first!");
+            }
+
+            status.style.color = "var(--primary-color)";
+            status.innerText = " Running Vectorized Batch Matching...";
+            
+            const formData = new URLSearchParams(); 
+            formData.append("job_description", jobDescInput.value);
+
+            try {
+                const res = await fetch(`${API}/recruiter_scan/`, { 
+                    method: "POST", 
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData 
+                });
+
+                if (!res.ok) throw new Error("Server Error");
+                
+                const data = await res.json();
+
+                if (data.error) {
+                    status.style.color = "#ef4444";
+                    status.innerText = "Error: " + data.error;
+                    return;
+                }
+
+                let html = "";
+
+                if (data.candidates && data.candidates.length > 0) {
+                    data.candidates.forEach((cand, index) => {
+                        
+                        const cleanId = cand.name.split('_').pop().split('.')[0];
+                        const displayName = `Candidate ${cleanId}`;
+
+                        const filteredSkills = cand.matched_skills.filter(s => 
+                            skillWhitelist.includes(s.toLowerCase().trim())
+                        );
+
+                        html += `
+                            <div class="candidate-card" style="animation: fadeIn 0.3s ease forwards; animation-delay: ${index * 0.1}s">
+                                <div class="candidate-info">
+                                    <h3>${displayName}</h3>
+                                    <p>Category: <span style="color:var(--match-cyan)">${cand.category}</span></p>
+                                    <div class="match-tags">
+                                        ${filteredSkills.map(s => `<span class="skill-pill-small">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                                <div class="match-score-badge">
+                                    <span class="score">${cand.score.toFixed(2)}%</span>
+                                    <span class="label">MATCH</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<div class="placeholder-text"><p>No strong matches found in this category.</p></div>';
+                }
+
+                resultsContainer.innerHTML = html;
+                status.innerText = "Scan Complete!";
+            } catch (err) {
+                console.error(err);
+                status.style.color = "#ef4444";
+                status.innerText = "Error connecting to AI Server. Is FastAPI running?";
+            }
+        }
+    </script>
+    
+</body>
+</html>
